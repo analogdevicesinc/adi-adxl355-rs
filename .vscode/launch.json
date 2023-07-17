@@ -1,0 +1,68 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "preLaunchTask": "build nrf52840 examples",
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "Debug nrf52840 SPI example",
+            "chip": "nRF52840_xxAA",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "resetAfterFlashing": true,
+                "haltAfterReset": false
+            },
+            "coreConfigs": [
+                {
+                    "rttEnabled": true,
+                    "programBinary": "${workspaceFolder}/target/thumbv7em-none-eabihf/debug/nrf52840_spi"
+                }
+            ],
+            "env": {
+                "DEFMT_LOG": "info"
+            }
+        },
+        {
+            "preLaunchTask": "build nrf52840 examples",
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "Debug nrf52840 async SPI example",
+            "chip": "nRF52840_xxAA",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "resetAfterFlashing": true,
+                "haltAfterReset": false
+            },
+            "coreConfigs": [
+                {
+                    "rttEnabled": true,
+                    "programBinary": "${workspaceFolder}/target/thumbv7em-none-eabihf/debug/nrf52840_spi_async"
+                }
+            ],
+            "env": {
+                "DEFMT_LOG": "info"
+            }
+        },
+        {
+            "preLaunchTask": "build nrf52840 examples",
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "Debug nrf52840 async I2C example",
+            "chip": "nRF52840_xxAA",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "resetAfterFlashing": true,
+                "haltAfterReset": false
+            },
+            "coreConfigs": [
+                {
+                    "rttEnabled": true,
+                    "programBinary": "${workspaceFolder}/target/thumbv7em-none-eabihf/debug/nrf52840_i2c_async"
+                }
+            ],
+            "env": {
+                "DEFMT_LOG": "info"
+            }
+        }
+    ]
+}

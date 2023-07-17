@@ -1,0 +1,122 @@
+name: CI
+
+env:
+  CARGO_TERM_COLOR: always
+  MSRV: "1.68"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+
+jobs:
+  check-clippy-fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+          targets: aarch64-unknown-linux-gnu, x86_64-unknown-linux-gnu
+      - name: "install Rust nightly"
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly-2023-06-01
+          components: clippy, rustfmt
+          targets: thumbv7em-none-eabihf
+      - uses: Swatinem/rust-cache@v2
+      - name: Check linux aarch64
+        run: cargo +stable clippy --target aarch64-unknown-linux-gnu --features std -p adi-adxl355 -p rp-adxl355 -- -D warnings
+      - name: Check ARM Cortex
+        run: cargo +nightly-2023-06-01 clippy --target thumbv7em-none-eabihf --features defmt -p adi-adxl355 -p adi-adxl355-async -p nrf52840-adxl355-embassy-example -- -D warnings
+      - name: rustfmt
+        run: cargo +stable fmt --all --check
+
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: aarch64-unknown-linux-gnu
+      - uses: Swatinem/rust-cache@v2
+      - name: cargo doc
+        env:
+          RUSTDOCFLAGS: "-D rustdoc::all -A rustdoc::private-doc-tests"
+        run: cargo +nightly doc --all-features --no-deps -p adi-adxl355 -p adi-adxl355-async --target aarch64-unknown-linux-gnu
+
+  build-msrv-stable:
+    needs: check-clippy-fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.MSRV }}
+          targets: aarch64-unknown-linux-gnu
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Arm GNU Toolchain
+        run: sudo apt-get install -y gcc-aarch64-linux-gnu
+      - name: Build blocking driver and rpi example
+        run: >
+          cargo +${{ env.MSRV }} 
+          build 
+          --release 
+          --target aarch64-unknown-linux-gnu 
+          --all-features 
+          -p adi-adxl355 
+          -p rp-adxl355 
+          --config target.aarch64-unknown-linux-gnu.linker=\"aarch64-linux-gnu-gcc\"
+
+  build-nightly:
+    needs: check-clippy-fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly-2023-06-01
+          targets: thumbv7em-none-eabihf, x86_64-unknown-linux-gnu
+      - uses: Swatinem/rust-cache@v2
+      - name: Install flip-link
+        run: cargo +nightly-2023-06-01 install flip-link
+      - name: Build both drivers and nrf52840 example
+        run: >
+          cargo +nightly-2023-06-01 
+          build 
+          --release 
+          --target thumbv7em-none-eabihf 
+          --features defmt 
+          -p adi-adxl355 
+          -p adi-adxl355-async 
+          -p nrf52840-adxl355-embassy-example
+
+  deny-check:
+    name: cargo-deny check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        checks:
+          - advisories
+          - bans licenses sources
+    continue-on-error: ${{ matrix.checks == 'advisories' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: EmbarkStudios/cargo-deny-action@v1
+        with:
+          command: check ${{ matrix.checks }}
+          arguments: --all-features
+
+  check-dependency-sort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install cargo-sort
+        run: |
+          cargo install cargo-sort
+      - name: Check dependency tables
+        run: |
+          cargo sort --workspace --grouped --check

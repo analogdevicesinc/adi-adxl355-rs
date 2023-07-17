@@ -1,0 +1,7 @@
+[workspace]
+members = ["adi-adxl355", "adi-adxl355-async", "examples/*"]
+default-members = ["adi-adxl355"]
+resolver = "2"
+
+[profile.dev]
+debug = 2

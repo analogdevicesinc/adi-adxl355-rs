@@ -1,0 +1,43 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cargo",
+			"command": "build",
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "rust: cargo build",
+			"options": {
+				"env": {
+					"DEFMT_LOG": "info"
+				}
+			}
+		},
+		{
+			"label": "build nrf52840 examples",
+			"type": "cargo",
+			"command": "build",
+			"args": [
+				"--package",
+				"nrf52840-adxl355-embassy-example",
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"options": {
+				"env": {
+					"DEFMT_LOG": "info"
+				}
+			}
+		}
+	]
+}

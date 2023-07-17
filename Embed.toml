@@ -1,0 +1,16 @@
+# This Embed.toml is used to load and run the examples. See nrf52840-examples\README.md.
+
+[nrf52840.general]
+chip = "nRF52840_xxAA"
+
+[default.rtt]
+enabled = true
+channels = [
+    { up = 0, down = 0, name = "defmt_log", up_mode = "NoBlockTrim", format = "Defmt" },
+]
+
+[default.gdb]
+# Whether or not a GDB server should be opened after flashing.
+enabled = false
+# The connection string in host:port format where the GDB server will open a socket.
+gdb_connection_string = "127.0.0.1:3333"

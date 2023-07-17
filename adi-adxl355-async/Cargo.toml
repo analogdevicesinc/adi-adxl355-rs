@@ -1,0 +1,31 @@
+[package]
+name = "adi-adxl355-async"
+description = "An embedded-hal-async driver for the ADXL355 accelerometer"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.68"
+authors = ["Max Lehuraux <max.lehuraux@analog.com>"]
+keywords = [
+    "embedded-hal-driver",
+    "embedded-hal-async",
+    "accelerometer",
+    "adi",
+    "MEMS",
+    "analog-devices",
+]
+categories = ["embedded", "hardware-support", "no-std"]
+readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/analogdevicesinc/adi-adxl355-rs"
+homepage = "https://github.com/analogdevicesinc/adi-adxl355-rs"
+
+[dependencies]
+adi-adxl355 = { path = "../adi-adxl355", version = "0.1.0" }
+defmt = { version = "0.3", optional = true }
+embedded-hal = "1.0.0-alpha.10"
+embedded-hal-async = "0.2.0-alpha.1"
+micromath = { version = "2.0", features = ["vector"] }
+
+[features]
+default = []
+defmt = ["dep:defmt", "adi-adxl355/defmt"]
