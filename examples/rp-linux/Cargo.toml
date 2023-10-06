@@ -1,6 +1,6 @@
 [package]
 name = "rp-adxl355"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Application demonstrating the ADXL355 driver on Raspberry Pi 4"
 readme = "README.md"
@@ -18,8 +18,8 @@ repository = "https://github.com/analogdevicesinc/adi-adxl355-rs"
 homepage = "https://github.com/analogdevicesinc/adi-adxl355-rs"
 
 [dependencies]
-adi-adxl355 = { path = "../../adi-adxl355", version = "0.1.0", features = [
+adi-adxl355 = { path = "../../adi-adxl355", version = "0.2.0", features = [
     "std",
 ] }
 anyhow = "1.0"
-linux-embedded-hal = { version = "0.4.0-alpha.3", git = "https://github.com/rust-embedded/linux-embedded-hal.git", rev = "a0d986b" }
+linux-embedded-hal = { version = "0.4.0-alpha.3", git = "https://github.com/rust-embedded/linux-embedded-hal.git", rev = "27daf71" }

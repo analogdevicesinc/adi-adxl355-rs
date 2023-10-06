@@ -13,7 +13,7 @@ You could use this project with any eval board or development kit containing the
 The BMD-340-EVAL also features an on-board programming and debug interface, the SEGGER J-Link-OB which is supported by [probe-rs](https://probe.rs/), the chosen toolkit to load and debug the firmware.
 If you use another eval board, you'll have to make sure your debug probe/interface is either supported by `probe-rs` or that you use something else for loading and debugging the firmware (e.g. OpenOCD and GDB).
 
-#### Wiring EVAL-ADXL355 to BMD-340-EVAL for SPI communications
+### Wiring EVAL-ADXL355 to BMD-340-EVAL for SPI communications
 
 | Function | BMD-340-EVAL pin | EVAL-ADXL355 pin | Description                         |
 | :------- | ---------------: | ---------------: | ----------------------------------- |
@@ -29,7 +29,7 @@ If you use another eval board, you'll have to make sure your debug probe/interfa
 Note that on the BMD340-EVAL, any pin in the range P0.00-P0.31, and P1.00-P1.15 can be used for SPI communications.
 If you decide to wire the ADXL355 to the BMD-340 differently, you'll have to adjust the pins in the example code.
 
-#### Wiring EVAL-ADXL355 to BMD-340-EVAL for I2C communications
+### Wiring EVAL-ADXL355 to BMD-340-EVAL for I2C communications
 
 | Function | BMD-340-EVAL pin | EVAL-ADXL355 pin | Description                          |
 | :------- | ---------------: | ---------------: | ------------------------------------ |
@@ -127,27 +127,29 @@ Install it with:
 cargo install probe-run
 ```
 
-This enables us to load and run the firmware with `cargo run` by setting up as the runner in `.cargo/config.toml`
+This enables loading and running the firmware with `cargo run` by setting up as the runner in `.cargo/config.toml`
 
 #### cargo-embed
 
-[cargo-embed](https://probe.rs/docs/tools/cargo-embed/) is an alternative to `probe-run`. Install it with:
+[cargo-embed](https://probe.rs/docs/tools/cargo-embed/) is an alternative to `probe-run`.
+
+It is installed as part of `probe-rs` tools with:
 
 ```sh
-cargo install cargo-embed
+cargo install probe-rs --features cli
 ```
 
-This enables us to load and run the firmware with `cargo embed`.
+This enables loading and running the firmware with `cargo embed`.
 Its configuration is in `Embed.toml`. It is set to open an RTTUI to display prints and logs. It has the option to start a GDB server which is not enabled by default.
 
-#### probe-rs-debugger
+#### probe-rs for VSCode
 
-[probe-rs-debugger](https://probe.rs/docs/tools/vscode/) with its corresponding [VSCode extension](https://marketplace.visualstudio.com/items?itemName=probe-rs.probe-rs-debugger) enables us to debug the firmware right from VSCode.
+[probe-rs for VSCode](https://probe.rs/docs/tools/vscode/) with its corresponding [VSCode extension](https://marketplace.visualstudio.com/items?itemName=probe-rs.probe-rs-debugger) enables debugging the firmware right from VSCode.
 
-Install it with:
+It is installed as part of `probe-rs` tools with:
 
 ```sh
-cargo install probe-rs-debugger
+cargo install probe-rs --features cli
 ```
 
 Then install the VSCode extension.

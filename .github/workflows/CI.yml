@@ -22,14 +22,14 @@ jobs:
       - name: "install Rust nightly"
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2023-06-01
+          toolchain: nightly-2023-09-27
           components: clippy, rustfmt
           targets: thumbv7em-none-eabihf
       - uses: Swatinem/rust-cache@v2
       - name: Check linux aarch64
         run: cargo +stable clippy --target aarch64-unknown-linux-gnu --features std -p adi-adxl355 -p rp-adxl355 -- -D warnings
       - name: Check ARM Cortex
-        run: cargo +nightly-2023-06-01 clippy --target thumbv7em-none-eabihf --features defmt -p adi-adxl355 -p adi-adxl355-async -p nrf52840-adxl355-embassy-example -- -D warnings
+        run: cargo +nightly-2023-09-27 clippy --target thumbv7em-none-eabihf --features defmt -p adi-adxl355 -p adi-adxl355-async -p nrf52840-adxl355-embassy-example -- -D warnings
       - name: rustfmt
         run: cargo +stable fmt --all --check
 
@@ -76,14 +76,14 @@ jobs:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: nightly-2023-06-01
+          toolchain: nightly-2023-09-27
           targets: thumbv7em-none-eabihf, x86_64-unknown-linux-gnu
       - uses: Swatinem/rust-cache@v2
       - name: Install flip-link
-        run: cargo +nightly-2023-06-01 install flip-link
+        run: cargo +nightly-2023-09-27 install flip-link
       - name: Build both drivers and nrf52840 example
         run: >
-          cargo +nightly-2023-06-01 
+          cargo +nightly-2023-09-27 
           build 
           --release 
           --target thumbv7em-none-eabihf 

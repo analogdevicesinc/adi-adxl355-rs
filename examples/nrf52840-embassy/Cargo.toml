@@ -1,7 +1,7 @@
 [package]
 name = "nrf52840-adxl355-embassy-example"
 description = "Examples running on a nRF52840 for the ADXL355 accelerometer async driver"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 rust-version = "1.68"
 authors = ["Max Lehuraux <max.lehuraux@analog.com>"]
@@ -19,10 +19,10 @@ repository = "https://github.com/analogdevicesinc/adi-adxl355-rs"
 homepage = "https://github.com/analogdevicesinc/adi-adxl355-rs"
 
 [dependencies]
-adi-adxl355 = { path = "../../adi-adxl355", version = "0.1.0", features = [
+adi-adxl355 = { path = "../../adi-adxl355", version = "0.2.0", features = [
     "defmt",
 ] }
-adi-adxl355-async = { path = "../../adi-adxl355-async", version = "0.1.0", features = [
+adi-adxl355-async = { path = "../../adi-adxl355-async", version = "0.2.0", features = [
     "defmt",
 ] }
 cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
@@ -31,16 +31,16 @@ defmt = "0.3"
 defmt-rtt = "0.4"
 embassy-embedded-hal = { version = "0.1", features = [
     "nightly",
-], git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
-embassy-executor = { version = "0.1", features = [
+], git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
+embassy-executor = { version = "0.3", features = [
     "arch-cortex-m",
     "executor-thread",
     "executor-interrupt",
     "defmt",
     "integrated-timers",
     "nightly",
-], git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
-embassy-futures = { version = "0.1", git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
+], git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
+embassy-futures = { version = "0.1", git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
 embassy-nrf = { version = "0.1", features = [
     "defmt",
     "nrf52840",
@@ -50,16 +50,17 @@ embassy-nrf = { version = "0.1", features = [
     "time",
     "unstable-traits",
     "nightly",
-], git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
-embassy-sync = { version = "0.1", features = [
+], git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
+embassy-sync = { version = "0.3", features = [
     "defmt",
-], git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
+    "nightly",
+], git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
 embassy-time = { version = "0.1", features = [
     "defmt",
     "defmt-timestamp-uptime",
     "nightly",
-], git = "https://github.com/embassy-rs/embassy.git", rev = "ba8cafb" }
-embedded-hal = "1.0.0-alpha.10"
-embedded-hal-async = "0.2.0-alpha.1"
+], git = "https://github.com/embassy-rs/embassy.git", rev = "a72a91a" }
+embedded-hal = "1.0.0-rc.1"
+embedded-hal-async = "1.0.0-rc.1"
 panic-probe = { version = "0.3", features = ["print-defmt"] }
 static_cell = "1.0"
