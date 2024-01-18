@@ -9,11 +9,6 @@ Examples running on a nRF52840 SoC can be found in [examples\nrf52840-embassy](.
 
 An example running on a Raspberry Pi 4 can be found in [examples\rp-linux](.\examples\rp-linux), see corresponding [README](./examples/rp-linux/README.md).
 
-## Rust toolchain
-
-The `rust-toolchain.toml` set the toolchain channel to nightly in order to compile the whole workspace. The nightly toolchain is needed for the async driver and embassy examples projects.
-The blocking driver and Raspberry Pi example can be compiled with the stable toolchain.
-
 ## License
 
 This project is licensed under the [Apache 2.0 license](./LICENSE).

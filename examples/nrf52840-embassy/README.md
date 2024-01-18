@@ -60,16 +60,6 @@ On Unix-like OS, you can use this command:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-In this project, we are using [embassy](https://embassy.dev/) which relies on Rust nightly features,
-so we have to use Rust nightly:
-
-```sh
-rustup update nightly
-```
-
-The nightly toolchain is used by default for the workspace thanks to the `rust-toolchain.toml` file at its root.
-You can also use `rustup override set nightly` to set the nightly toolchain as default for the current crate or use `+nightly` when using `rustup` or `cargo` commands e.g., `cargo +nightly build`.
-
 Cross-compilation support for the Cortex-M4F architecture has to be added with:
 
 ```sh
@@ -100,13 +90,13 @@ We'll use utilities based on the `probe-rs` toolkit to load the examples and deb
 
 #### System dependencies On Ubuntu
 
-Install `probe-run` system dependencies:
+Install `probe-rs` system dependencies:
 
 ```sh
 sudo apt install -y libusb-1.0-0-dev libudev-dev
 ```
 
-We also have to make sure we can access the debug probe. We'll add all the debug probes supported by `probe-run`.
+We also have to make sure we can access the debug probe. We'll add all the debug probes supported by `probe-rs`.
 
 - Download this [file](https://probe.rs/files/69-probe-rs.rules) containing device rules
 - Copy it in `/etc/udev/rules.d`
@@ -117,30 +107,16 @@ We also have to make sure we can access the debug probe. We'll add all the debug
 
 `probe-rs` does not support the Segger JLink driver. It needs to be replaced by the generic WinUSB driver using a tool like [Zadig](https://zadig.akeo.ie/#). More info in [probe-rs docs](https://probe.rs/docs/getting-started/probe-setup/).
 
-#### probe-run
-
-[probe-run](https://crates.io/crates/probe-run) is a custom Cargo runner that transparently runs Rust firmware on an embedded device.
-
-Install it with:
-
-```sh
-cargo install probe-run
-```
-
-This enables loading and running the firmware with `cargo run` by setting up as the runner in `.cargo/config.toml`
-
 #### cargo-embed
 
-[cargo-embed](https://probe.rs/docs/tools/cargo-embed/) is an alternative to `probe-run`.
+[cargo-embed](https://probe.rs/docs/tools/cargo-embed/) enables loading and running the firmware with `cargo embed`.
+Its configuration is in `Embed.toml`. It is set to open an RTTUI to display prints and logs. It has the option to start a GDB server which is not enabled by default.
 
 It is installed as part of `probe-rs` tools with:
 
 ```sh
 cargo install probe-rs --features cli
 ```
-
-This enables loading and running the firmware with `cargo embed`.
-Its configuration is in `Embed.toml`. It is set to open an RTTUI to display prints and logs. It has the option to start a GDB server which is not enabled by default.
 
 #### probe-rs for VSCode
 
@@ -166,7 +142,7 @@ If logs and prints don't show up, either:
 
 ### Running the SPI example
 
-Using the aliases defined in `.cargo/config.toml`, it can be built with `cargo bnrf` and, if `probe-run` is installed, it can be run with `cargo rnrfspi`.
+Using the aliases defined in `.cargo/config.toml`, it can be built with `cargo bnrf` and, if `probe-rs` is installed, it can be run with `cargo rnrfspi`.
 
 It can also be built, loaded, and run with `cargo-embed` with `cargo embed --package nrf52840-adxl355-embassy-example --bin nrf52840_spi nrf52840`.
 
@@ -174,7 +150,7 @@ With `probe-rs-debugger` installed, it can be built, loaded, run and debugged fr
 
 ### Running the I2C example
 
-Using the aliases defined in `.cargo/config.toml`, it can be built with `cargo bnrf` and, if `probe-run` is installed, it can be run with `cargo rnrfi2c`.
+Using the aliases defined in `.cargo/config.toml`, it can be built with `cargo bnrf` and, if `probe-rs` is installed, it can be run with `cargo rnrfi2c`.
 
 It can also be built, loaded, and run with `cargo-embed` with `cargo embed --package nrf52840-adxl355-embassy-example --bin nrf52840_i2c_async nrf52840`.
 

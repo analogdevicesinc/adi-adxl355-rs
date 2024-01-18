@@ -10,16 +10,11 @@ More info in the [product webpage](https://www.analog.com/en/products/ADXL355.ht
 
 ## Minimum Supported Rust Version (MSRV)
 
-This crate requires Rust nightly newer than `nightly-2022-11-22`, due to requiring support for
-`async fn` in traits (AFIT), which is not stable yet.
-
-Keep in mind Rust nightlies can make backwards-incompatible changes to unstable features
-at any time.
+This crate is guaranteed to compile on stable Rust 1.75 and up.
 
 ## Usage
 
 This driver relies on an implementation of either `embedded_hal_async::spi::SpiDevice` or `embedded_hal_async::i2c::I2c` traits by a HAL.
-At the time of this writing, it seems that only the [embassy-hal](https://embassy.dev/) provides one.
 
 Add this crate as a dependency in your `Cargo.toml` file:
 

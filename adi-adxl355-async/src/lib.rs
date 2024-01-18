@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #![no_std]
-#![feature(type_alias_impl_trait)]
-#![allow(incomplete_features)]
-#![feature(async_fn_in_trait)]
+#![allow(async_fn_in_trait)]
 #![doc = include_str!("../README.md")]
 
 pub use adi_adxl355::config::*;

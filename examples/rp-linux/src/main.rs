@@ -16,7 +16,7 @@ use anyhow::Result;
 use linux_embedded_hal::{
     gpio_cdev::{Chip, EventRequestFlags, LineEventHandle, LineRequestFlags},
     spidev::{SpiModeFlags, SpidevOptions},
-    Spidev,
+    SpidevDevice,
 };
 
 use adi_adxl355::{Adxl355, Config as Adxl355Config, Protocol, Register as Adxl355Register};
@@ -26,7 +26,7 @@ const GPIO_PATH: &str = "/dev/gpiochip0";
 const DRDY_PIN: u32 = 27;
 
 fn main() -> Result<()> {
-    let mut spi_dev = Spidev::open(SPI_PATH)?;
+    let mut spi_dev = SpidevDevice::open(SPI_PATH)?;
     let options = SpidevOptions::new()
         .bits_per_word(8)
         .max_speed_hz(10_000_000)
@@ -43,7 +43,7 @@ fn main() -> Result<()> {
     get_adxl355_data(spi_dev, drdy)
 }
 
-fn get_adxl355_data(spi_dev: Spidev, mut drdy: LineEventHandle) -> Result<()> {
+fn get_adxl355_data(spi_dev: SpidevDevice, mut drdy: LineEventHandle) -> Result<()> {
     let mut acc = Adxl355::new_spi_with_config(spi_dev, Adxl355Config::default())?;
 
     let dev_id = acc.get_device_id()?;
